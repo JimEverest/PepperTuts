@@ -11,7 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Async1Activity">
+        <activity android:name=".Motion1Activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,7 +19,7 @@
             </intent-filter>
         </activity>
         <!-- <activity android:name=".Async1Activity"></activity> -->
-        <activity android:name=".Motion1Activity"></activity>
+        <!--<activity android:name=".Motion1Activity"></activity>-->
     </application>
 
 </manifest>
