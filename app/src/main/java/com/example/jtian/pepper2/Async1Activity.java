@@ -25,7 +25,7 @@ public class Async1Activity extends RobotActivity implements RobotLifecycleCallb
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_async1);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_async1);
         QiSDK.register(this, this);
         
         final Button sayHelloButton = findViewById(R.id.sayhello);
