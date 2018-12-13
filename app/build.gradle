@@ -16,8 +16,8 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    splits{
-        abi{
+    splits {
+        abi {
             enable true
             reset()
             include "armeabi-v7a"

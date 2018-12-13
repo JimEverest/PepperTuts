@@ -64,7 +64,8 @@ public class MainActivity extends RobotActivity implements RobotLifecycleCallbac
             sayHello.run();   }
     }
 
-    Override public void onRobotFocusLost() {
+    @Override
+    public void onRobotFocusLost() {
         if (humanAwareness != null) {
             humanAwareness.removeAllOnEngagedHumanChangedListeners();
         }
@@ -81,30 +82,5 @@ public class MainActivity extends RobotActivity implements RobotLifecycleCallbac
         QiSDK.unregister(this,this);
     }
 
-    private class ShowCarExecutor extends BaseQiChatExecutor {
-        public ShowCarExecutor(QiContext qiContext) {
-            super(qiContext);
-        }
 
-        @Override
-        public void runWith(List<String> params) {
-            final String color = params.get(0);
-            final String imageName = color + "_car";
-            final int imageId = getResources().getIdentifier(
-                    imageName,
-                    "drawable",
-                    getPackageName()
-            );
-            runOnUiThread(() -> {
-                ImageView splashImage = findViewById(R.id.splashImage);
-                splashImage.setImageResource(imageId);
-                splashImage.setVisibility(View.VISIBLE);
-            });
-        }
-
-        @Override
-        public void stop() {
-
-        }
-    }
 }
