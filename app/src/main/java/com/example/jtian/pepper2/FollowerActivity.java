@@ -2,7 +2,10 @@ package com.example.jtian.pepper2;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Button;
+import android.widget.Toast;
 
+import com.aldebaran.qi.Future;
 import com.aldebaran.qi.sdk.QiContext;
 import com.aldebaran.qi.sdk.QiSDK;
 import com.aldebaran.qi.sdk.RobotLifecycleCallbacks;
@@ -31,48 +34,67 @@ public class FollowerActivity extends RobotActivity implements RobotLifecycleCal
     private Say sayHello;
     private HumanAwareness humanAwareness;
     QiContext qiContext = null;
+    Future<Void> goFuture = null;
+    private Button b;
+    Human engagedHuman =null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_follower);
-        QiSDK.register(this,this);
+        b = findViewById(R.id.follow_button);
+        QiSDK.register(this, this);
     }
 
     @Override
     public void onRobotFocusGained(QiContext qiContext) {
         this.qiContext = qiContext;
-        sayHello = SayBuilder.with(qiContext).withText("Hi there").build();
+        //sayHello = SayBuilder.with(qiContext).withText("Hi there").build();
         humanAwareness = qiContext.getHumanAwareness();
+        showToast("Engaging");
         humanAwareness.addOnEngagedHumanChangedListener(this::onEngageHuman);
-        onEngageHuman(humanAwareness.getEngagedHuman()); // ini
+        engagedHuman=humanAwareness.getEngagedHuman();
+        onEngageHuman(engagedHuman); // ini
     }
 
 
-
-
     private void onEngageHuman(Human engagedHuman) {
-        if (engagedHuman!=null) {
-            //sayHello.async().run();
+        if (engagedHuman != null) {
 
-//            Mapping mapping = qiContext.getMapping();
-//            FreeFrame targetFrame = mapping.makeFreeFrame();
-
-//            Actuation actuation = qiContext.getActuation();
-//            Frame robotFrame = actuation.robotFrame();
-//
-//            TransformTime transformTime = humanFrame.computeTransform(robotFrame);
-//            Transform transform = transformTime.getTransform();
-//            targetFrame.update(robotFrame, transform, System.currentTimeMillis());
-            
+            showToast("Engaged  !! ");
             Frame humanFrame = engagedHuman.getHeadFrame();
             GoTo goTo = GoToBuilder.with(qiContext)
                     .withFrame(humanFrame) // Set the target frame.
                     .build();   // Add a consumer to the action execution
-            goTo.run();
-
-            onEngageHuman(engagedHuman);
+            goFuture = goTo.async().run();
+            showToast("Moving");
+            goFuture.thenConsume(this::showFutureResult);
         }
 
+    }
+
+    private void showFutureResult(Future<Void> goFuture) {
+        if (goFuture.hasError()) {
+            showToast("Error: " + goFuture.getErrorMessage());
+
+            onEngageHuman(engagedHuman);
+        } else if (goFuture.isCancelled()) {
+            showToast("Cancelled");
+
+            onEngageHuman(engagedHuman);
+        } else {
+            showToast("Arrived");
+        }
+    }
+
+    private void showToast(String msg) {
+        runOnUiThread(() -> {
+            Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+            if (b!=null)
+            {
+                b.setText(msg);
+            }
+        });
     }
 
     @Override
@@ -89,8 +111,8 @@ public class FollowerActivity extends RobotActivity implements RobotLifecycleCal
     }
 
     @Override
-    public void onDestroy(){
+    public void onDestroy() {
         super.onDestroy();
-        QiSDK.unregister(this,this);
+        QiSDK.unregister(this, this);
     }
 }
