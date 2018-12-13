@@ -21,6 +21,7 @@ import com.aldebaran.qi.sdk.object.conversation.Say;
 public class Async1Activity extends RobotActivity implements RobotLifecycleCallbacks {
     QiContext qiContext = null;
     Say say = null;
+    Future<Void> sayFuture = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +38,7 @@ public class Async1Activity extends RobotActivity implements RobotLifecycleCallb
 //                sayFuture.thenConsume(this::onSayDone);
 //            }
 
-            Future<Void> sayFuture = null;
+
             if (say == null) {       }
             else if ((sayFuture == null) || (sayFuture.isDone())) {
                 sayFuture = say.async().run();

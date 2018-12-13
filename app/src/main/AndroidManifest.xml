@@ -18,7 +18,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--<activity android:name=".Async1Activity"></activity>-->
+        <!-- <activity android:name=".Async1Activity"></activity> -->
+        <activity android:name=".Motion1Activity"></activity>
     </application>
 
 </manifest>
