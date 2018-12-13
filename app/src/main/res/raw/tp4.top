@@ -1,0 +1,13 @@
+topic: ~tp4()
+
+concept:(color) [black grey white red green blue yellow]
+
+proposal: %ICEBREAKER
+  Ask me about cars!
+u:(show me a car)
+  here it is ^execute(showCar)
+
+
+u:(show me a _~color [car one])
+Okay let's look for a $1 car ^execute(showCar, $1)
+

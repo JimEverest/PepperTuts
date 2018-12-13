@@ -1,0 +1,27 @@
+topic: ~tp3()
+# Defining extra concepts out of words or group of words
+#concept:(hello) [hello hi hey "good morning" greetings]
+concept:(ready) [ready "I am ready"]
+concept:(pos) [yes "that's right" right exactly]
+# Replying to speech
+
+
+proposal:%ICEBREAKER
+Think of a number and tell me when you're ready.
+
+u:(~ready) Is it $guess_number ?
+
+
+u:({no still } smaller)
+%smaller
+
+
+u:({no still } larger)
+%larger
+
+
+u:(~pos) Hooray!
+
+
+proposal: %GUESS
+Is it $guess_number ?

@@ -1,0 +1,18 @@
+topic: ~tp1()
+# Defining extra concepts out of words or group of words
+#concept:(hello) [hello hi hey "good morning" greetings]
+
+# Replying to speech
+#u:(~hello) ~hello
+u:(I like _[tea coffee]) Good to know $drink=$1
+
+u:(My name is _*) Pleased to meet you $1
+$name = $1
+
+u:(Do you know me?)
+ ^first[
+    "Yes, you are $name and you like $drink"
+    "Yes, you are $name"
+    "I know you like $drink"
+    "No, I don't know you"
+ ]

@@ -1,0 +1,12 @@
+topic: ~tp2()
+# Defining extra concepts out of words or group of words
+concept:(hello) [hello hi hey "good morning" greetings]
+
+concept:(hey) [Good afternoon]
+
+
+# Replying to speech
+u:(~hello) ~hey
+
+proposal: %ICEBREAKER
+Hi I'm Pepper!
